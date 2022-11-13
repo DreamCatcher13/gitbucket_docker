@@ -2,4 +2,5 @@
 
 ---
 
-for dockerfile of gitbucket
+Gitbucket app to dockerfile and k8. 
+
