@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitbucket-depl
+  labels:
+    app: gitbucket
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitbucket
+  template:
+    metadata:
+      labels:
+        app: gitbucket
+    spec:
+      containers:
+      - name: gitbucket
+        image: rand1337/gitbucket-img:v2 
+        ports:
+        - containerPort: 8080
+          #        env:
+          #    - name: USER_NAME
+          # valueFrom:
+          #  secretKeyRef:
+          #    name: mongo-secret
+          #    key: mongo-user
+          #   - name: USER_PWD
+          # valueFrom:
+          #  secretKeyRef:
+          #    name: mongo-secret
+          #    key: mongo-pass
+          #   - name: DB_URL
+          #   valueFrom:
+          #            configMapKeyRef:
+          #    name: mongo-config
+          #    key: mongo-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitbucket-service
+spec:
+  type: LoadBalancer
+  selector: 
+    app: gitbucket
+  ports:
+    - protocol: TCP
+      port: 8080 
+      targetPort: 8080
+      nodePort: 30140
