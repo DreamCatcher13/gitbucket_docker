@@ -22,28 +22,32 @@ spec:
           volumeMounts:
           - mountPath: "/var/gitbucket"
             name: volume-for-bckt
+          env:
+          - name: GITBUCKET_DB_URL
+            value: "jdbc:postgresql://$(POSTGRESQL_SERVICE_PORT_5432_TCP_ADDR):5432/gitbucket"   
+          - name: GITBUCKET_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: username
+          - name: GITBUCKET_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: password
+            #env:
+            #- name: DB_URL
+            #valueFrom:
+            #configMapKeyRef:
+            #name: postgres-config
+            #key: db-url
+            #command: ["export"]
+            #args: ["DB_URL='jdbc:postgresql://$(POSTGRESQL_SERVICE_PORT_5432_TCP_ADDR):5432/gitbucket'"]
       volumes:
         - name: volume-for-bckt
           persistentVolumeClaim:
             claimName: bckt-claim 
 
-
-          #        env:
-          #    - name: USER_NAME
-          # valueFrom:
-          #  secretKeyRef:
-          #    name: mongo-secret
-          #    key: mongo-user
-          #   - name: USER_PWD
-          # valueFrom:
-          #  secretKeyRef:
-          #    name: mongo-secret
-          #    key: mongo-pass
-          #   - name: DB_URL
-          #   valueFrom:
-          #            configMapKeyRef:
-          #    name: mongo-config
-          #    key: mongo-url
 ---
 apiVersion: v1
 kind: Service
