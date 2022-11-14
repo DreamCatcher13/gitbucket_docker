@@ -15,10 +15,19 @@ spec:
         app: gitbucket
     spec:
       containers:
-      - name: gitbucket
-        image: rand1337/gitbucket-img:v2 
-        ports:
-        - containerPort: 8080
+        - name: gitbucket
+          image: rand1337/gitbucket-img:v3 
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+          - mountPath: "/var/gitbucket"
+            name: volume-for-bckt
+      volumes:
+        - name: volume-for-bckt
+          persistentVolumeClaim:
+            claimName: bckt-claim 
+
+
           #        env:
           #    - name: USER_NAME
           # valueFrom:

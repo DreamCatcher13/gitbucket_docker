@@ -1,12 +1,11 @@
-FROM eclipse-temurin:8u352-b08-jre
+FROM tomcat:9.0-jre11-temurin
 
 RUN apt-get update && apt-get install -y zip
-
+ENV GITBUCKET_HOME=/var/gitbucket
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
 ADD https://github.com/gitbucket/gitbucket/releases/download/4.38.4/gitbucket.war /opt/gitbucket.war
-
-# Port for web page and Port for SSH access to git repository (Optional)
-EXPOSE 8080 29418
-
 RUN zip -d /opt/gitbucket.war WEB-INF/classes/plugins/*.jar
-
-CMD ["sh", "-c", "java -jar /opt/gitbucket.war"]
+RUN mv /opt/gitbucket.war /usr/local/tomcat/webapps/ROOT.war
+VOLUME $GITBUCKET_HOME
+EXPOSE 8080 29418
+CMD [ "/usr/local/tomcat/bin/catalina.sh", "run" ]
