@@ -24,7 +24,7 @@ spec:
             name: volume-for-bckt
           env:
           - name: GITBUCKET_DB_URL
-            value: "jdbc:postgresql://$(POSTGRESQL_SERVICE_PORT_5432_TCP_ADDR):5432/gitbucket"   
+            value: "jdbc:postgresql://$(POSTGRESQL_SERVICE_SERVICE_HOST):5432/gitbucket"   
           - name: GITBUCKET_DB_USER
             valueFrom:
               secretKeyRef:
