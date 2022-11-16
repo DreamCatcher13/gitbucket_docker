@@ -1,7 +1,9 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: bckt-nfs-server
+  labels:
+    app: bckt-nfs
 spec:
   replicas: 1
   selector:
@@ -11,23 +13,23 @@ spec:
     metadata:
       labels:
         app: bckt-nfs
-  spec:
-    containers:
+    spec:
+      containers:
       - name: bckt-nfs-server
-        image: gcr_io/google_containers/volume-nfs:0.8
+        image: gcr.io/google_containers/volume-nfs:0.8
         ports:
-          - name: nfs
-            containerPort: 2049
-          - name: mountd
-            containerPort: 20048
-          - name: rpcbind
-            containerPort: 111
+        - name: nfs
+          containerPort: 2049
+        - name: mountd
+          containerPort: 20048
+        - name: rpcbind
+          containerPort: 111
         securityContext:
           privileged: true
         volumeMounts:
-          - mountPath: "/exports"
-            name: bckt-m
-    volumes:
+        - mountPath: "/exports"
+          name: bckt-m
+      volumes:
       - name: bckt-m
         gcePersistentDisk:           
           pdName: bckt-nfs
@@ -42,13 +44,13 @@ spec:
   selector:
     app: bckt-nfs
   ports:
-    - name: nfs
-      port: 2049
-      targetPort: 2049
-    - name: mountd
-      port: 20048
-      targetPort: 20048
-    - name: rpcbind
-      port: 111
-      targetPort: 111
+  - name: nfs
+    port: 2049
+    targetPort: 2049
+  - name: mountd
+    port: 20048     
+    targetPort: 20048
+  - name: rpcbind
+    port: 111
+    targetPort: 111
 
