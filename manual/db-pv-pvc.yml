@@ -5,26 +5,25 @@ metadata:
   labels:
     app: postgres-db
 spec:
-  capacity: 
-    storage: 100Mi
+  capacity:
+    storage: 10Gi
   accessModes:
-    - ReadWriteMany
-  hostPath:
-    path: "/data/psql"
+    - ReadWriteOnce
+  nfs:
+    server:
+    path: "/"
 
 ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
-metadata:
+metadata: 
   name: psql-claim
 spec:
-  accessModes:
-    - ReadWriteMany
-  volumeMode: Filesystem
-  resources:
-    requests:
-      storage: 100Mi
   selector:
     matchLabels:
       app: postgres-db
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi

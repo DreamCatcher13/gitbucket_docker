@@ -3,28 +3,27 @@ kind: PersistentVolume
 metadata:
   name: volume-for-bckt
   labels:
-    app: gitbucket
+    app: gitbucket 
 spec:
-  capacity: 
-    storage: 100Mi
+  capacity:
+    storage: 10Gi
   accessModes:
     - ReadWriteMany
-  hostPath:
-    path: "/data/bckt_home"
+  nfs:
+    server:
+    path: "/"
 
 ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
-metadata:
+metadata: 
   name: bckt-claim
 spec:
-  accessModes:
-    - ReadWriteMany
-  volumeMode: Filesystem
-  resources:
-    requests:
-      storage: 100Mi
   selector:
     matchLabels:
       app: gitbucket
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
