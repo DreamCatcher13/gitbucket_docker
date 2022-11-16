@@ -8,7 +8,7 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   nfs:
     server: psql-nfs-service.default.svc.cluster.local
     path: "/"
@@ -20,7 +20,7 @@ metadata:
   name: psql-claim
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   storageClassName: ""
   resources:
     requests:
