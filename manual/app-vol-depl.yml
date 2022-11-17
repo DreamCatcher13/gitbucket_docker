@@ -32,7 +32,7 @@ spec:
       volumes:
       - name: bckt-m
         gcePersistentDisk:           
-          pdName: bckt-nfs
+          pdName: app-nfs
           fsType: ext4
 
 ---
