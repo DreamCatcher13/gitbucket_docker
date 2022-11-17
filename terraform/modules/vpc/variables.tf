@@ -9,7 +9,7 @@ variable "net_name" {
 
 variable "sub_name" {
   type    = string
-  default = "clst_sub"
+  default = "clst-sub"
 }
 
 variable "ip_range" {

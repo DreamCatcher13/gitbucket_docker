@@ -1,3 +1,3 @@
 provider "google" {
-  project     = "my-project-id"
+  project     = "operating-edge-365907"
 }
