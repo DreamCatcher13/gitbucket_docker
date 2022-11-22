@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: gitbucket
-          image: rand1337/gitbucket-img:v3 
+          image: rand1337/gitbucket-img:v4 
           ports:
             - containerPort: 8080
           volumeMounts:
